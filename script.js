@@ -15,16 +15,24 @@ function getComputerChoice() {
 }
 
 /*
+ Convert player selection parameter string to proper case
+    take string's first character, convert it to upper case
+    take the rest of the string and convert it to lower case
+    concatenate both strings and return it
+*/
+
+function toCapitalizedCase(txt) {
+  return txt.charAt(0).toUpperCase()
+        + txt.slice(1).toLowerCase();
+}
+
+/*
  Problem:
  Simulate one round of the game between the player and the computer
 
  Pseudocode:
  Take player's choice and computer's choices as two input strings
- Write a separate utility function for case conversion:
-  Convert player selection parameter string to proper case
-    take string's first character, convert it to upper case
-    take the rest of the string and convert it to lower case
-    concatenate both strings
+ Convert player's choice to capitalized case
  Decide if the player is a winner or a loser and return corresponding string
  Create an object with choice strings as keys and numbers from 0 to 2 as
  their strength
@@ -38,7 +46,9 @@ function getComputerChoice() {
   Player loses
  */
 
+  
 function playRound(playerSelection, computerSelection) {
+  
   playerSelection = toCapitalizedCase(playerSelection);
 
   const choiceStrength = {
@@ -55,28 +65,21 @@ function playRound(playerSelection, computerSelection) {
 
   switch (diff) {
     case 0:
-      console.log("It's a tie!");
-      return;
+      return "It's a tie!";
 
     case 1:
     case -2:
-      console.log(`You Win! ${playerSelection} beats ${computerSelection}`);
-      return;
+      return `You Win! ${playerSelection} beats ${computerSelection}`;
 
     case -1:
     case 2:
-      console.log(`You Lose! ${computerSelection} beats ${playerSelection}`);
-      return;
+      return `You Lose! ${computerSelection} beats ${playerSelection}`;
 
     default:
-      console.log(`Unexpected case: diff is ${diff}`);
-      break;
+      return `Unexpected case: diff is ${diff}`;
   }
 }
-
-function toCapitalizedCase(txt) {
-  return txt.charAt(0).toUpperCase()
-        + txt.slice(1).toLowerCase();
-}
-
-playRound('Rock', getComputerChoice());
+ 
+const playerSelection = "rock";
+const computerSelection = getComputerChoice();
+console.log(playRound(playerSelection, computerSelection));
