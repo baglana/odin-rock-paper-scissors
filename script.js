@@ -39,7 +39,7 @@ function getComputerChoice() {
  */
 
 function showWinOrLoseOrTie(playerSelection, computerSelection) {
-  // playerSelection = playerSelection.charAt(0).toUpperCase();
+  playerSelection = toCapitalizedCase(playerSelection);
 
   const choiceStrength = {
     'Paper': 0,
@@ -50,7 +50,7 @@ function showWinOrLoseOrTie(playerSelection, computerSelection) {
   console.log(`player: ${playerSelection}; strength: ${choiceStrength[playerSelection]}`);
   console.log(`computer: ${computerSelection}; strength: ${choiceStrength[computerSelection]}`);
 
-  const diff = choiceStrength[playerSelection]
+  const diff  = choiceStrength[playerSelection]
               - choiceStrength[computerSelection];
 
   switch (diff) {
@@ -72,6 +72,11 @@ function showWinOrLoseOrTie(playerSelection, computerSelection) {
       console.log(`Unexpected case: diff is ${diff}`);
       break;
   }
+}
+
+function toCapitalizedCase(txt) {
+  return txt.charAt(0).toUpperCase()
+        + txt.slice(1).toLowerCase();
 }
 
 showWinOrLoseOrTie('Rock', getComputerChoice());
