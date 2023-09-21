@@ -122,12 +122,27 @@ function game(rounds = 5) {
 }
 
 function showResults(playerScore, computerScore) {
+  const styles = {
+    won: "font-size: 20px; font-weight: bold; color: green",
+    lost: "font-size: 20px; font-weight: bold; color: red",
+    tie: "font-size: 20px; font-weight: bold; color: grey"
+  }
+
   if (playerScore > computerScore) {
-    console.log(`You Won! Final score: ${playerScore} : ${computerScore}`);
+    console.log(
+      `%cYou Won! Final score: ${playerScore} : ${computerScore}`,
+      styles.won
+    );
   } else if (playerScore < computerScore) {
-    console.log(`You Lost! Final score: ${playerScore} : ${computerScore}`);
+    console.log(
+      `%cYou Lost! Final score: ${playerScore} : ${computerScore}`,
+      styles.lost
+    );
   } else {
-    console.log(`It's a tie! Final score: ${playerScore} : ${computerScore}`);
+    console.log(
+      `%cIt's a tie! Final score: ${playerScore} : ${computerScore}`,
+      styles.tie
+    );
   }
 }
 
