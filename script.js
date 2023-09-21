@@ -107,7 +107,9 @@ function game(rounds = 5) {
   let playerScore = 0;
   let computerScore = 0;
 
-  for (let i = 0; i < rounds; i++) {
+  for (let i = 1; i <= rounds; i++) {
+    console.log(`%c\nRound ${i}`, "font-size: 16px;");
+
     const playerSelection = prompt("Enter your selection: ", "rock");
     const computerSelection = getComputerChoice();
     
@@ -130,17 +132,17 @@ function showResults(playerScore, computerScore) {
 
   if (playerScore > computerScore) {
     console.log(
-      `%cYou Won! Final score: ${playerScore} : ${computerScore}`,
+      `%c\nYou Won! Final score: ${playerScore} - ${computerScore}`,
       styles.won
     );
   } else if (playerScore < computerScore) {
     console.log(
-      `%cYou Lost! Final score: ${playerScore} : ${computerScore}`,
+      `%c\nYou Lost! Final score: ${playerScore} - ${computerScore}`,
       styles.lost
     );
   } else {
     console.log(
-      `%cIt's a tie! Final score: ${playerScore} : ${computerScore}`,
+      `%c\nIt's a tie! Final score: ${playerScore} - ${computerScore}`,
       styles.tie
     );
   }
