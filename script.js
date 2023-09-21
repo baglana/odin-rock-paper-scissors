@@ -38,7 +38,7 @@ function getComputerChoice() {
   Player loses
  */
 
-function showWinOrLoseOrTie(playerSelection, computerSelection) {
+function playRound(playerSelection, computerSelection) {
   playerSelection = toCapitalizedCase(playerSelection);
 
   const choiceStrength = {
@@ -79,4 +79,4 @@ function toCapitalizedCase(txt) {
         + txt.slice(1).toLowerCase();
 }
 
-showWinOrLoseOrTie('Rock', getComputerChoice());
+playRound('Rock', getComputerChoice());
