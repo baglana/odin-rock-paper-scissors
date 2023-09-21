@@ -65,21 +65,70 @@ function playRound(playerSelection, computerSelection) {
 
   switch (diff) {
     case 0:
-      return "It's a tie!";
+      return {
+        playerScore: 0,
+        computerScore: 0,
+        msg: "It's a tie!"
+      };
 
     case 1:
     case -2:
-      return `You Win! ${playerSelection} beats ${computerSelection}`;
+      return {
+        playerScore: 1,
+        computerScore: 0,
+        msg: `You Win! ${playerSelection} beats ${computerSelection}`
+      };
 
     case -1:
     case 2:
-      return `You Lose! ${computerSelection} beats ${playerSelection}`;
+      return {
+        playerScore: 0,
+        computerScore: 1,
+        msg: `You Lose! ${computerSelection} beats ${playerSelection}`
+      };
 
     default:
       return `Unexpected case: diff is ${diff}`;
   }
 }
- 
-const playerSelection = "rock";
-const computerSelection = getComputerChoice();
-console.log(playRound(playerSelection, computerSelection));
+
+/*
+  Problem: play 5 rounds of Rock Paper Scissors and output the winner
+
+  Pseudocode:
+  Create two variables to store player's and computer's score
+  Call playRound() function for 5 times
+  if the returned string starts with 'You win' add 1 to player's score
+  if it is 'You lose' add 1 to computer's score
+  Output the result
+*/
+
+function game(rounds = 5) {
+  let playerScore = 0;
+  let computerScore = 0;
+
+  for (let i = 0; i < rounds; i++) {
+    const playerSelection = prompt("Enter your selection: ", "rock");
+    const computerSelection = getComputerChoice();
+    
+    const roundResult = playRound(playerSelection, computerSelection);
+    console.table(roundResult);
+
+    playerScore += roundResult.playerScore;
+    computerScore += roundResult.computerScore;
+  }
+
+  showResults(playerScore, computerScore);
+}
+
+function showResults(playerScore, computerScore) {
+  if (playerScore > computerScore) {
+    console.log(`You Won! Final score: ${playerScore} : ${computerScore}`);
+  } else if (playerScore < computerScore) {
+    console.log(`You Lost! Final score: ${playerScore} : ${computerScore}`);
+  } else {
+    console.log(`It's a tie! Final score: ${playerScore} : ${computerScore}`);
+  }
+}
+
+game();
