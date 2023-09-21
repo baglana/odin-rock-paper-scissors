@@ -57,8 +57,8 @@ function playRound(playerSelection, computerSelection) {
     'Rock': 2
   };
 
-  console.log(`player: ${playerSelection}; strength: ${choiceStrength[playerSelection]}`);
-  console.log(`computer: ${computerSelection}; strength: ${choiceStrength[computerSelection]}`);
+  // console.log(`player: ${playerSelection}; strength: ${choiceStrength[playerSelection]}`);
+  // console.log(`computer: ${computerSelection}; strength: ${choiceStrength[computerSelection]}`);
 
   const diff  = choiceStrength[playerSelection]
               - choiceStrength[computerSelection];
