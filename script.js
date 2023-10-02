@@ -103,7 +103,7 @@ function playRound(playerSelection, computerSelection) {
   Output the result
 */
 
-function game(rounds = 5) {
+function game(rounds = 1) {
   let playerScore = 0;
   let computerScore = 0;
 
@@ -148,4 +148,17 @@ function showResults(playerScore, computerScore) {
   }
 }
 
-game();
+// game();
+
+const buttons = document.querySelectorAll('button');
+
+buttons.forEach((button) => {
+  button.addEventListener('click', () => {
+    const playerSelection = button.value;
+    const computerSelection = getComputerChoice();
+    
+    const result = playRound(playerSelection, computerSelection);
+    console.table(result);
+  });
+});
+
