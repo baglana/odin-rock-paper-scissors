@@ -103,24 +103,36 @@ function playRound(playerSelection, computerSelection) {
   Output the result
 */
 
-function game(rounds = 1) {
+function game() {
+  let round = 0;
   let playerScore = 0;
   let computerScore = 0;
 
-  for (let i = 1; i <= rounds; i++) {
-    console.log(`%c\nRound ${i}`, "font-size: 16px;");
+  const roundPara = document.querySelector('#round');
+  roundPara.style.cssText = 'font-size: 16px;';
 
-    const playerSelection = prompt("Enter your selection: ", "rock");
-    const computerSelection = getComputerChoice();
+  const buttons = document.querySelectorAll('button');
+
+  buttons.forEach((button) => {
+
+    button.addEventListener('click', () => {
+      roundPara.textContent = `Round ${++round}`;
+      console.log(`%c\nRound ${round}`, "font-size: 16px;");
+
+      const playerSelection = button.value;
+      const computerSelection = getComputerChoice();
+
+      const roundResult = playRound(playerSelection, computerSelection);
+      console.table(roundResult);
+
+      playerScore += roundResult.playerScore;
+      computerScore += roundResult.computerScore;
+
+      showResults(playerScore, computerScore);
+    });
     
-    const roundResult = playRound(playerSelection, computerSelection);
-    console.table(roundResult);
+  });
 
-    playerScore += roundResult.playerScore;
-    computerScore += roundResult.computerScore;
-  }
-
-  showResults(playerScore, computerScore);
 }
 
 function showResults(playerScore, computerScore) {
@@ -130,35 +142,35 @@ function showResults(playerScore, computerScore) {
     tie: "font-size: 20px; font-weight: bold; color: grey"
   }
 
+  const resultsDiv = document.querySelector('#results');
+  resultsDiv.style = '';
+  let resultsMsg = `Final score: ${playerScore} - ${computerScore}`;
+
   if (playerScore > computerScore) {
-    console.log(
-      `%c\nYou Won! Final score: ${playerScore} - ${computerScore}`,
-      styles.won
-    );
+
+    resultsMsg = `You Won! ` + resultsMsg;
+    console.log(`%c\n` + resultsMsg, styles.won);
+
+    resultsDiv.textContent = resultsMsg;
+    resultsDiv.style.cssText = styles.won;
+
   } else if (playerScore < computerScore) {
-    console.log(
-      `%c\nYou Lost! Final score: ${playerScore} - ${computerScore}`,
-      styles.lost
-    );
+
+    resultsMsg = `You Lost! ` + resultsMsg;
+    console.log(`%c\n` + resultsMsg, styles.lost);
+
+    resultsDiv.textContent = resultsMsg;
+    resultsDiv.style.cssText = styles.lost;
+
   } else {
-    console.log(
-      `%c\nIt's a tie! Final score: ${playerScore} - ${computerScore}`,
-      styles.tie
-    );
+
+    resultsMsg = `It's a tie! ` + resultsMsg;
+    console.log(`%c\n` + resultsMsg, styles.tie);
+
+    resultsDiv.textContent = resultsMsg;
+    resultsDiv.style.cssText = styles.tie;
+
   }
 }
 
-// game();
-
-const buttons = document.querySelectorAll('button');
-
-buttons.forEach((button) => {
-  button.addEventListener('click', () => {
-    const playerSelection = button.value;
-    const computerSelection = getComputerChoice();
-    
-    const result = playRound(playerSelection, computerSelection);
-    console.table(result);
-  });
-});
-
+game();
