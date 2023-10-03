@@ -108,8 +108,22 @@ function game() {
   let playerScore = 0;
   let computerScore = 0;
 
-  const roundPara = document.querySelector('#round');
+  const bod = document.querySelector('body');
+
+  const roundPara = document.createElement('p');
+  const scorePara = document.createElement('p');
+
   roundPara.style.cssText = 'font-size: 16px;';
+  scorePara.style.cssText = 'font-size: 16px;';
+
+  roundPara.textContent = `Round ${++round}`;
+  scorePara.textContent = `Score: ${playerScore} - ${computerScore}`;
+
+  window.onload = () => {
+    const playerChoices = document.querySelector('#player-choices');
+    bod.insertBefore(scorePara, playerChoices);
+    bod.insertBefore(roundPara, scorePara);
+  }
 
   const buttons = document.querySelectorAll('button');
 
@@ -127,12 +141,35 @@ function game() {
 
       playerScore += roundResult.playerScore;
       computerScore += roundResult.computerScore;
+      scorePara.textContent = `Score: ${playerScore} - ${computerScore}`;
 
-      showResults(playerScore, computerScore);
+      showRoundResult(roundResult);
+
+      if (playerScore === 5 || computerScore === 5) {
+        showResults(playerScore, computerScore);
+        
+      }
+      
     });
     
   });
 
+}
+
+/*
+  On the left side of the screen there are three buttons with three choices to select
+  When one of the buttons is clicked, player's choice and computer's choice are displayed
+  in the center of the screen and round result message is displayed below
+  After each round round number and running score displayed in the top of the screen
+  are updated
+  Once one player reaches score of 5 show winner/loser message in a separate para
+  remove event listeners from buttons and display separate button asking to play again.
+  If it is pressed, play the game from the start.
+*/
+
+function showRoundResult(roundResult) {
+  const roundResultPara = document.querySelector('#round-result');
+  roundResultPara.textContent = roundResult.msg;
 }
 
 function showResults(playerScore, computerScore) {
@@ -143,34 +180,33 @@ function showResults(playerScore, computerScore) {
   }
 
   const resultsDiv = document.querySelector('#results');
-  resultsDiv.style = '';
+  const resultsPara = document.createElement('p');
   let resultsMsg = `Final score: ${playerScore} - ${computerScore}`;
+  let style = '';
 
   if (playerScore > computerScore) {
 
     resultsMsg = `You Won! ` + resultsMsg;
     console.log(`%c\n` + resultsMsg, styles.won);
-
-    resultsDiv.textContent = resultsMsg;
-    resultsDiv.style.cssText = styles.won;
+    style = styles.won;
 
   } else if (playerScore < computerScore) {
 
     resultsMsg = `You Lost! ` + resultsMsg;
     console.log(`%c\n` + resultsMsg, styles.lost);
-
-    resultsDiv.textContent = resultsMsg;
-    resultsDiv.style.cssText = styles.lost;
+    style = styles.lost;
 
   } else {
 
     resultsMsg = `It's a tie! ` + resultsMsg;
     console.log(`%c\n` + resultsMsg, styles.tie);
-
-    resultsDiv.textContent = resultsMsg;
-    resultsDiv.style.cssText = styles.tie;
+    style = styles.tie;
 
   }
+
+  resultsPara.style.cssText = style;
+  resultsPara.textContent = resultsMsg;
+  resultsDiv.appendChild(resultsPara);
 }
 
 game();
