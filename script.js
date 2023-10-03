@@ -119,41 +119,39 @@ function game() {
   roundPara.textContent = `Round ${++round}`;
   scorePara.textContent = `Score: ${playerScore} - ${computerScore}`;
 
-  window.onload = () => {
-    const playerChoices = document.querySelector('#player-choices');
-    bod.insertBefore(scorePara, playerChoices);
-    bod.insertBefore(roundPara, scorePara);
-  }
+  const rpsButtons = document.querySelector('#rps-buttons');
 
-  const buttons = document.querySelectorAll('button');
+  bod.insertBefore(scorePara, rpsButtons);
+  bod.insertBefore(roundPara, scorePara);
+  
+  rpsButtons.addEventListener('click', handlePlayerChoice);
 
-  buttons.forEach((button) => {
-
-    button.addEventListener('click', () => {
-      roundPara.textContent = `Round ${++round}`;
-      console.log(`%c\nRound ${round}`, "font-size: 16px;");
-
-      const playerSelection = button.value;
-      const computerSelection = getComputerChoice();
-
-      const roundResult = playRound(playerSelection, computerSelection);
-      console.table(roundResult);
-
-      playerScore += roundResult.playerScore;
-      computerScore += roundResult.computerScore;
-      scorePara.textContent = `Score: ${playerScore} - ${computerScore}`;
-
-      showRoundResult(roundResult);
-
-      if (playerScore === 5 || computerScore === 5) {
-        showResults(playerScore, computerScore);
-        
-      }
-      
-    });
+  
+  function handlePlayerChoice(event) {
+  
+    roundPara.textContent = `Round ${++round}`;
+    console.log(`%c\nRound ${round}`, "font-size: 16px;");
+  
+    const playerSelection = event.target.value;
+    const computerSelection = getComputerChoice();
+  
+    const roundResult = playRound(playerSelection, computerSelection);
+    console.table(roundResult);
+  
+    playerScore += roundResult.playerScore;
+    computerScore += roundResult.computerScore;
+    scorePara.textContent = `Score: ${playerScore} - ${computerScore}`;
+  
+    showRoundResult(roundResult);
+  
+    if (playerScore === 5 || computerScore === 5) {
+      showResults(playerScore, computerScore);
+  
+      rpsButtons.removeEventListener('click', handlePlayerChoice)
+    }
     
-  });
-
+  }
+  
 }
 
 /*
