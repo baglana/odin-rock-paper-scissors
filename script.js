@@ -220,24 +220,18 @@ function showGameResults(playerScore, computerScore) {
     tie: "color: grey"
   }
 
-  let resultsMsg = `Final score: ${playerScore} - ${computerScore}`;
+  let resultsMsg = `Final score: ${playerScore}&nbsp;-&nbsp;${computerScore}`;
   let style = '';
 
   if (playerScore > computerScore) {
-
     resultsMsg = `You Won! ` + resultsMsg;
     style = styles.won;
-
   } else if (playerScore < computerScore) {
-
     resultsMsg = `You Lost! ` + resultsMsg;
     style = styles.lost;
-
   } else {
-
     resultsMsg = `It's a tie! ` + resultsMsg;
     style = styles.tie;
-
   }
 
   const rowDiv = document.createElement('div');
@@ -246,7 +240,7 @@ function showGameResults(playerScore, computerScore) {
   const gameResultsPara = document.createElement('p');
   gameResultsPara.setAttribute('id', 'game-results');
   gameResultsPara.style.cssText = style;
-  gameResultsPara.textContent = resultsMsg;
+  gameResultsPara.innerHTML = resultsMsg;
   rowDiv.appendChild(gameResultsPara);
 
   const replayBtn = document.createElement('button');
