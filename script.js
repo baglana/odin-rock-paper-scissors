@@ -75,7 +75,8 @@ function playRound(playerSelection, computerSelection) {
       return {
         playerScore: 1,
         computerScore: 0,
-        msg: `You Win! ${playerSelection} beats ${computerSelection}`
+        msg: `You Win! <span>${playerSelection}</span> \
+beats <span>${computerSelection}</span>`
       };
 
     case -1:
@@ -83,7 +84,8 @@ function playRound(playerSelection, computerSelection) {
       return {
         playerScore: 0,
         computerScore: 1,
-        msg: `You Lose! ${computerSelection} beats ${playerSelection}`
+        msg: `You Lose! <span>${playerSelection}</span> \
+beats <span>${computerSelection}</span>`
       };
 
     default:
@@ -146,27 +148,27 @@ function game() {
     const computerSelection = getComputerChoice();
 
     let selectionsDiv = document.querySelector('#selections');
+    let playerSelectionCard;
+    let computerSelectionCard;
 
     if (!selectionsDiv) {
       selectionsDiv = document.createElement('div');
       selectionsDiv.setAttribute('id', 'selections');
-    }
 
-    let playerSelectionCard = selectionsDiv.firstElementChild;
-    let computerSelectionCard = selectionsDiv.lastElementChild;
-
-    if (!playerSelectionCard || !computerSelectionCard) {
       playerSelectionCard = document.createElement('div');
       computerSelectionCard = document.createElement('div');
       playerSelectionCard.setAttribute('id', 'selection-card');
       computerSelectionCard.setAttribute('id', 'selection-card');
+
+      selectionsDiv.appendChild(playerSelectionCard);
+      selectionsDiv.appendChild(computerSelectionCard);
+    } else {
+      playerSelectionCard = selectionsDiv.firstElementChild;
+      computerSelectionCard = selectionsDiv.lastElementChild;
     }
 
     playerSelectionCard.textContent = emojis[playerSelection];
     computerSelectionCard.textContent = emojis[computerSelection];
-
-    selectionsDiv.appendChild(playerSelectionCard);
-    selectionsDiv.appendChild(computerSelectionCard);
 
     const resultsDiv = document.querySelector('#results');
     resultsDiv.appendChild(selectionsDiv);
@@ -181,10 +183,9 @@ function game() {
     showRoundResult(roundResult);
   
     if (playerScore === 5 || computerScore === 5) {
-      showResults(playerScore, computerScore);
+      showGameResults(playerScore, computerScore);
   
       rpsButtons.removeEventListener('click', handlePlayerChoice)
-    
     }
     
   }
@@ -205,25 +206,24 @@ function game() {
 function showRoundResult(roundResult) {
 
   let roundResultPara = document.querySelector('#round-result');
+
   if (!roundResultPara) {
     roundResultPara = document.createElement('p');
     roundResultPara.setAttribute('id', 'round-result');
   }
-  roundResultPara.textContent = roundResult.msg;
+  roundResultPara.innerHTML = roundResult.msg;
 
   const resultsDiv = document.querySelector('#results');
   resultsDiv.appendChild(roundResultPara);
 }
 
-function showResults(playerScore, computerScore) {
+function showGameResults(playerScore, computerScore) {
   const styles = {
-    won: "font-size: 30px; font-weight: bold; color: green",
-    lost: "font-size: 30px; font-weight: bold; color: red",
-    tie: "font-size: 30px; font-weight: bold; color: grey"
+    won: "color: green",
+    lost: "color: red",
+    tie: "color: grey"
   }
 
-  const resultsDiv = document.querySelector('#results');
-  const resultsPara = document.createElement('p');
   let resultsMsg = `Final score: ${playerScore} - ${computerScore}`;
   let style = '';
 
@@ -247,21 +247,27 @@ function showResults(playerScore, computerScore) {
 
   }
 
-  resultsPara.style.cssText = style;
-  resultsPara.textContent = resultsMsg;
-  resultsDiv.appendChild(resultsPara);
+  const rowDiv = document.createElement('div');
+  rowDiv.classList.add('row');
+
+  const gameResultsPara = document.createElement('p');
+  gameResultsPara.setAttribute('id', 'game-results');
+  gameResultsPara.style.cssText = style;
+  gameResultsPara.textContent = resultsMsg;
+  rowDiv.appendChild(gameResultsPara);
 
   const replayBtn = document.createElement('button');
   replayBtn.setAttribute('id', 'replay-btn');
-
   replayBtn.textContent = '🔁 Replay';
-  resultsDiv.insertBefore(replayBtn, resultsPara);
+  rowDiv.appendChild(replayBtn);
+
+  const resultsDiv = document.querySelector('#results');
+  resultsDiv.appendChild(rowDiv);
 
   replayBtn.addEventListener('click', () => {
     resultsDiv.removeChild(document.querySelector('#selections'));
     resultsDiv.removeChild(document.querySelector('#round-result'));
-    resultsDiv.removeChild(replayBtn);
-    resultsDiv.removeChild(resultsPara);
+    resultsDiv.removeChild(rowDiv);
     game();
   });
 
