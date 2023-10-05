@@ -46,7 +46,6 @@ function toCapitalizedCase(txt) {
   Player loses
  */
 
-  
 function playRound(playerSelection, computerSelection) {
   
   playerSelection = toCapitalizedCase(playerSelection);
@@ -110,11 +109,21 @@ function game() {
 
   const bod = document.querySelector('body');
 
-  const roundPara = document.createElement('p');
-  const scorePara = document.createElement('p');
+  let roundPara// = document.querySelector('#round');
 
-  roundPara.style.cssText = 'font-size: 16px;';
-  scorePara.style.cssText = 'font-size: 16px;';
+  if (!roundPara) {
+    roundPara = document.createElement('p');
+    roundPara.setAttribute('id', 'round');
+    roundPara.style.cssText = 'font-size: 16px;';
+  }
+
+  let scorePara// = document.querySelector('#score');
+
+  if (!scorePara) {
+    scorePara = document.createElement('p');
+    scorePara.setAttribute('id', 'score');
+    scorePara.style.cssText = 'font-size: 16px;';
+  }  
 
   roundPara.textContent = `Round ${++round}`;
   scorePara.textContent = `Score: ${playerScore} - ${computerScore}`;
@@ -125,7 +134,6 @@ function game() {
   bod.insertBefore(roundPara, scorePara);
   
   rpsButtons.addEventListener('click', handlePlayerChoice);
-
   
   function handlePlayerChoice(event) {
   
@@ -148,6 +156,7 @@ function game() {
       showResults(playerScore, computerScore);
   
       rpsButtons.removeEventListener('click', handlePlayerChoice)
+    
     }
     
   }
@@ -205,6 +214,16 @@ function showResults(playerScore, computerScore) {
   resultsPara.style.cssText = style;
   resultsPara.textContent = resultsMsg;
   resultsDiv.appendChild(resultsPara);
+
+  const replayBtn = document.createElement('button');
+
+  replayBtn.textContent = '🔁 Replay';
+  resultsDiv.insertBefore(replayBtn, resultsPara);
+
+  replayBtn.addEventListener('click', () => {
+   game(); 
+  });
+
 }
 
 game();
