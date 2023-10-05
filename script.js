@@ -257,6 +257,8 @@ function showGameResults(playerScore, computerScore) {
   const resultsDiv = document.querySelector('#results');
   resultsDiv.appendChild(rowDiv);
 
+  rowDiv.scrollIntoView({behavior: "smooth"});
+
   replayBtn.addEventListener('click', () => {
     resultsDiv.removeChild(document.querySelector('#selections'));
     resultsDiv.removeChild(document.querySelector('#round-result'));
