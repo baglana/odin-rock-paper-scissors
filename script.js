@@ -109,7 +109,7 @@ function game() {
 
   const bod = document.querySelector('body');
 
-  let roundPara// = document.querySelector('#round');
+  let roundPara = document.querySelector('#round');
 
   if (!roundPara) {
     roundPara = document.createElement('p');
@@ -117,7 +117,7 @@ function game() {
     roundPara.style.cssText = 'font-size: 16px;';
   }
 
-  let scorePara// = document.querySelector('#score');
+  let scorePara = document.querySelector('#score');
 
   if (!scorePara) {
     scorePara = document.createElement('p');
@@ -175,8 +175,15 @@ function game() {
 */
 
 function showRoundResult(roundResult) {
-  const roundResultPara = document.querySelector('#round-result');
+  let roundResultPara = document.querySelector('#round-result');
+  if (!roundResultPara) {
+    roundResultPara = document.createElement('p');
+    roundResultPara.setAttribute('id', 'round-result');
+  }
   roundResultPara.textContent = roundResult.msg;
+
+  const resultsDiv = document.querySelector('#results');
+  resultsDiv.appendChild(roundResultPara);
 }
 
 function showResults(playerScore, computerScore) {
@@ -221,7 +228,10 @@ function showResults(playerScore, computerScore) {
   resultsDiv.insertBefore(replayBtn, resultsPara);
 
   replayBtn.addEventListener('click', () => {
-   game(); 
+    resultsDiv.removeChild(document.querySelector('#round-result'));
+    resultsDiv.removeChild(replayBtn);
+    resultsDiv.removeChild(resultsPara);
+    game();
   });
 
 }
