@@ -56,9 +56,6 @@ function playRound(playerSelection, computerSelection) {
     'Rock': 2
   };
 
-  // console.log(`player: ${playerSelection}; strength: ${choiceStrength[playerSelection]}`);
-  // console.log(`computer: ${computerSelection}; strength: ${choiceStrength[computerSelection]}`);
-
   const diff  = choiceStrength[playerSelection]
               - choiceStrength[computerSelection];
 
@@ -142,8 +139,7 @@ function game() {
     }
   
     roundPara.textContent = `Round ${++round}`;
-    console.log(`%c\nRound ${round}`, "font-size: 16px;");
-  
+
     const playerSelection = event.target.value;
     const computerSelection = getComputerChoice();
 
@@ -230,19 +226,16 @@ function showGameResults(playerScore, computerScore) {
   if (playerScore > computerScore) {
 
     resultsMsg = `You Won! ` + resultsMsg;
-    console.log(`%c\n` + resultsMsg, styles.won);
     style = styles.won;
 
   } else if (playerScore < computerScore) {
 
     resultsMsg = `You Lost! ` + resultsMsg;
-    console.log(`%c\n` + resultsMsg, styles.lost);
     style = styles.lost;
 
   } else {
 
     resultsMsg = `It's a tie! ` + resultsMsg;
-    console.log(`%c\n` + resultsMsg, styles.tie);
     style = styles.tie;
 
   }
