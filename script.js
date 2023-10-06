@@ -82,7 +82,7 @@ beats <span>${computerSelection}</span>`
         playerScore: 0,
         computerScore: 1,
         msg: `You Lose!<br><span>${playerSelection}</span> \
-beats <span>${computerSelection}</span>`
+is beaten by <span>${computerSelection}</span>`
       };
 
     default:
