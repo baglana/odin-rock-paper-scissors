@@ -72,7 +72,7 @@ function playRound(playerSelection, computerSelection) {
       return {
         playerScore: 1,
         computerScore: 0,
-        msg: `You Win! <span>${playerSelection}</span> \
+        msg: `You Win!<br><span>${playerSelection}</span> \
 beats <span>${computerSelection}</span>`
       };
 
@@ -81,7 +81,7 @@ beats <span>${computerSelection}</span>`
       return {
         playerScore: 0,
         computerScore: 1,
-        msg: `You Lose! <span>${playerSelection}</span> \
+        msg: `You Lose!<br><span>${playerSelection}</span> \
 beats <span>${computerSelection}</span>`
       };
 
