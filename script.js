@@ -192,7 +192,7 @@ function game() {
   On the left side of the screen there are three buttons with three choices to select
   When one of the buttons is clicked, player's choice and computer's choice are displayed
   in the center of the screen and round result message is displayed below
-  After each round round number and running score displayed in the top of the screen
+  After each round, round number and running score displayed at the top of the screen
   are updated
   Once one player reaches score of 5 show winner/loser message in a separate para
   remove event listeners from buttons and display separate button asking to play again.
