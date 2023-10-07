@@ -106,19 +106,8 @@ function game() {
   let playerScore = 0;
   let computerScore = 0;
 
-  let roundPara = document.querySelector('#round');
-
-  if (!roundPara) {
-    roundPara = document.createElement('p');
-    roundPara.setAttribute('id', 'round');
-  }
-
-  let scorePara = document.querySelector('#score');
-
-  if (!scorePara) {
-    scorePara = document.createElement('p');
-    scorePara.setAttribute('id', 'score');
-  }
+  const roundPara = getOrCreateElementWithId('p', 'round');
+  const scorePara = getOrCreateElementWithId('p', 'score');
 
   roundPara.textContent = `Round ${++round}`;
   scorePara.innerHTML = `${playerScore} - ${computerScore}`;
@@ -143,24 +132,16 @@ function game() {
     const playerSelection = event.target.value;
     const computerSelection = getComputerChoice();
 
-    let selectionsDiv = document.querySelector('#selections');
-    let playerSelectionCard;
-    let computerSelectionCard;
+    const selectionsDiv = getOrCreateElementWithId('div', 'selections');
+    let playerSelectionCard = selectionsDiv.firstElementChild;
+    let computerSelectionCard = selectionsDiv.lastElementChild;
 
-    if (!selectionsDiv) {
-      selectionsDiv = document.createElement('div');
-      selectionsDiv.setAttribute('id', 'selections');
-
-      playerSelectionCard = document.createElement('div');
-      computerSelectionCard = document.createElement('div');
-      playerSelectionCard.setAttribute('id', 'selection-card');
-      computerSelectionCard.setAttribute('id', 'selection-card');
+    if (!selectionsDiv.hasChildNodes()) {
+      playerSelectionCard = getOrCreateElementWithId('div', 'selection-card');
+      computerSelectionCard = getOrCreateElementWithId('div', 'selection-card');
 
       selectionsDiv.appendChild(playerSelectionCard);
       selectionsDiv.appendChild(computerSelectionCard);
-    } else {
-      playerSelectionCard = selectionsDiv.firstElementChild;
-      computerSelectionCard = selectionsDiv.lastElementChild;
     }
 
     playerSelectionCard.textContent = emojis[playerSelection];
@@ -188,6 +169,15 @@ function game() {
   
 }
 
+function getOrCreateElementWithId(tagName, id) {
+  let el = document.getElementById(id);
+  if (!el) {
+    el = document.createElement(tagName);
+    el.setAttribute('id', id);
+  }
+  return el;
+}
+
 /*
   On the left side of the screen there are three buttons with three choices to select
   When one of the buttons is clicked, player's choice and computer's choice are displayed
@@ -200,13 +190,7 @@ function game() {
 */
 
 function showRoundResult(roundResult) {
-
-  let roundResultPara = document.querySelector('#round-result');
-
-  if (!roundResultPara) {
-    roundResultPara = document.createElement('p');
-    roundResultPara.setAttribute('id', 'round-result');
-  }
+  const roundResultPara = getOrCreateElementWithId('p', 'round-result');
   roundResultPara.innerHTML = roundResult.msg;
 
   const resultsDiv = document.querySelector('#results');
