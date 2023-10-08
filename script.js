@@ -101,20 +101,21 @@ is beaten by <span>${computerSelection}</span>`
   Output the result
 */
 
+const selectionsDiv = document.querySelector('#selections');
+const playerSelectionCard = selectionsDiv.firstElementChild;
+const computerSelectionCard = selectionsDiv.lastElementChild;
+const roundResultPara = document.querySelector('#round-result');
+
 function game() {
   let round = 0;
   let playerScore = 0;
   let computerScore = 0;
 
-  const roundPara = getOrCreateElementWithId('p', 'round');
-  const scorePara = getOrCreateElementWithId('p', 'score');
+  const roundPara = document.querySelector('#round');
+  const scorePara = document.querySelector('#score');
 
   roundPara.textContent = `Round ${++round}`;
-  scorePara.innerHTML = `${playerScore} - ${computerScore}`;
-
-  const resultsDiv = document.querySelector('#results');
-  resultsDiv.appendChild(scorePara);
-  resultsDiv.appendChild(roundPara);
+  scorePara.textContent = `${playerScore} - ${computerScore}`;
 
   const rpsButtons = document.querySelector('#rps-buttons');
   rpsButtons.addEventListener('click', handlePlayerChoice);
@@ -129,35 +130,20 @@ function game() {
   
     roundPara.textContent = `Round ${++round}`;
 
+    console.log(`event.target.value: ${event.target.value}`);
     const playerSelection = event.target.value;
     const computerSelection = getComputerChoice();
 
-    const selectionsDiv = getOrCreateElementWithId('div', 'selections');
-    let playerSelectionCard = selectionsDiv.firstElementChild;
-    let computerSelectionCard = selectionsDiv.lastElementChild;
-
-    if (!selectionsDiv.hasChildNodes()) {
-      playerSelectionCard = getOrCreateElementWithId('div', 'selection-card');
-      computerSelectionCard = getOrCreateElementWithId('div', 'selection-card');
-
-      selectionsDiv.appendChild(playerSelectionCard);
-      selectionsDiv.appendChild(computerSelectionCard);
-    }
-
-    playerSelectionCard.textContent = emojis[playerSelection];
-    computerSelectionCard.textContent = emojis[computerSelection];
-
-    const resultsDiv = document.querySelector('#results');
-    resultsDiv.appendChild(selectionsDiv);
+    playerSelectionCard.firstElementChild.textContent
+      = emojis[playerSelection];
+    computerSelectionCard.firstElementChild.textContent
+      = emojis[computerSelection];
 
     const roundResult = playRound(playerSelection, computerSelection);
     console.table(roundResult);
   
-    playerScore += roundResult.playerScore;
-    computerScore += roundResult.computerScore;
-    scorePara.innerHTML = `${playerScore} - ${computerScore}`;
-  
     showRoundResult(roundResult);
+    updateScore(roundResult);
   
     if (playerScore === 5 || computerScore === 5) {
       showGameResults(playerScore, computerScore);
@@ -165,6 +151,12 @@ function game() {
       rpsButtons.removeEventListener('click', handlePlayerChoice)
     }
     
+  }
+
+  function updateScore(roundResult) {
+    playerScore += roundResult.playerScore;
+    computerScore += roundResult.computerScore;
+    scorePara.innerHTML = `${playerScore} - ${computerScore}`;
   }
   
 }
@@ -190,11 +182,7 @@ function getOrCreateElementWithId(tagName, id) {
 */
 
 function showRoundResult(roundResult) {
-  const roundResultPara = getOrCreateElementWithId('p', 'round-result');
   roundResultPara.innerHTML = roundResult.msg;
-
-  const resultsDiv = document.querySelector('#results');
-  resultsDiv.appendChild(roundResultPara);
 }
 
 function showGameResults(playerScore, computerScore) {
@@ -218,28 +206,24 @@ function showGameResults(playerScore, computerScore) {
     style = styles.tie;
   }
 
-  const rowDiv = document.createElement('div');
-  rowDiv.classList.add('row');
+  const rowDiv = document.querySelector('.row');
 
-  const gameResultsPara = document.createElement('p');
-  gameResultsPara.setAttribute('id', 'game-results');
+  const gameResultsPara = document.querySelector('#game-results');
   gameResultsPara.style.cssText = style;
   gameResultsPara.innerHTML = resultsMsg;
-  rowDiv.appendChild(gameResultsPara);
 
   const replayBtn = document.createElement('button');
   replayBtn.setAttribute('id', 'replay-btn');
   replayBtn.textContent = '🔁 Replay';
   rowDiv.appendChild(replayBtn);
 
-  const resultsDiv = document.querySelector('#results');
-  resultsDiv.appendChild(rowDiv);
-
   rowDiv.scrollIntoView({behavior: "smooth"});
 
   replayBtn.addEventListener('click', () => {
-    resultsDiv.removeChild(document.querySelector('#selections'));
-    resultsDiv.removeChild(document.querySelector('#round-result'));
+    playerSelectionCard.firstElementChild.textContent = '❔';
+    computerSelectionCard.firstElementChild.textContent = '❔';
+    roundResultPara.innerHTML = '';
+    const resultsDiv = document.querySelector('#results');
     resultsDiv.removeChild(rowDiv);
     game();
   });

@@ -30,10 +30,11 @@ p {
 }
 
 #rps-buttons button {
+  aspect-ratio: 1 / 1;
   font-size: 2.5em;
 }
 
-#results {
+.container {
   display: flex;
   flex-direction: column;
   flex: auto;
@@ -43,11 +44,16 @@ p {
 #selections {
   display: flex;
   justify-content: center;
-  gap: 50px;
+  gap: 100px;
 }
 
-#selection-card {
+.selection-sign {
   font-size: 100px;
+}
+
+.selection-card p {
+  font-size: 1.5em;
+  font-weight: 400;
 }
 
 #round-result {
