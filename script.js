@@ -130,7 +130,6 @@ function game() {
   
     roundPara.textContent = `Round ${++round}`;
 
-    console.log(`event.target.value: ${event.target.value}`);
     const playerSelection = event.target.value;
     const computerSelection = getComputerChoice();
 
@@ -140,8 +139,6 @@ function game() {
       = emojis[computerSelection];
 
     const roundResult = playRound(playerSelection, computerSelection);
-    console.table(roundResult);
-  
     showRoundResult(roundResult);
     updateScore(roundResult);
   
@@ -223,8 +220,8 @@ function showGameResults(playerScore, computerScore) {
     playerSelectionCard.firstElementChild.textContent = '❔';
     computerSelectionCard.firstElementChild.textContent = '❔';
     roundResultPara.innerHTML = '';
-    const resultsDiv = document.querySelector('#results');
-    resultsDiv.removeChild(rowDiv);
+    gameResultsPara.innerHTML = '';
+    rowDiv.removeChild(replayBtn);
     game();
   });
 
