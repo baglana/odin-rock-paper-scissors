@@ -189,7 +189,7 @@ function showGameResults(playerScore, computerScore) {
     tie: "color: grey"
   }
 
-  let resultsMsg = `Final score: ${playerScore}&nbsp;-&nbsp;${computerScore}`;
+  let resultsMsg = `Final&nbsp;score: ${playerScore}&nbsp;-&nbsp;${computerScore}`;
   let style = '';
 
   if (playerScore > computerScore) {
