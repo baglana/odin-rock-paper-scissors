@@ -1,6 +1,6 @@
 # odin-rock-paper-scissors
 
-Play classic Rock Paper Scissors game against the computer
+Play Rock Paper Scissors game against the computer
 
 First to score 5 points wins the game
 
